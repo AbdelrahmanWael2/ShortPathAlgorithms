@@ -5,42 +5,40 @@ import java.util.Scanner;
 import java.io.File;
 
 public class Graph {
-    private int V; //number of vertices
+    private int V; // number of vertices
     private List<List<Edge>> adj;
 
-    public Graph(int V){
+    public Graph(int V) {
         this.V = V;
         adj = new ArrayList<>();
-        //make a list for each node
-        for(int i = 0; i < V; i++){
+        // make a list for each node
+        for (int i = 0; i < V; i++) {
             adj.add(new ArrayList<>());
         }
     }
 
-    public void addEdge(int u, int v, int weight){
+    public void addEdge(int u, int v, int weight) {
         adj.get(u).add(new Edge(u, v, weight));
     }
 
-    public List<Edge> getEdges(int u){
+    public List<Edge> getEdges(int u) {
         return adj.get(u);
     }
 
-    public  List<Edge> getAdj(int u){
+    public List<Edge> getAdj(int u) {
         return this.adj.get(u);
     }
 
-    public int getV(){
+    public int getV() {
         return V;
     }
 
-
-
-    public int Size(){
+    public int Size() {
         return V;
     }
 
-    //return the graph that is read from file
-    public static Graph Initialize(File file) throws FileNotFoundException{
+    // return the graph that is read from file
+    public static Graph Initialize(File file) throws FileNotFoundException {
         Scanner sc = new Scanner(file);
         int V = sc.nextInt();
         int E = sc.nextInt();
@@ -55,11 +53,10 @@ public class Graph {
         return graph;
     }
 
-
     public static class Edge {
-        int u;
-        int v;
-        int weight;
+        private int u;
+        private int v;
+        private int weight;
 
         public Edge(int u, int v, int weight) {
             this.u = u;
@@ -78,9 +75,10 @@ public class Graph {
         public int getWeight() {
             return weight;
         }
+
         @Override
         public String toString() {
-            return "(" + u + ", " + v +  ", " + weight + ")";
+            return "(" + u + ", " + v + ", " + weight + ")";
         }
     }
 }
