@@ -19,8 +19,8 @@ public class MainFunctions {
         try {
             graph = Graph.Initialize(file);
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-            e.printStackTrace();
+            System.out.println("File not found, or invalid file format");
+            //e.printStackTrace();
         }
         gp = new GraphProcessor(graph);
         costOneD = new int[graph.Size()];
