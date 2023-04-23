@@ -20,7 +20,7 @@ public class MainFunctions {
             graph = Graph.Initialize(file);
         } catch (FileNotFoundException e) {
             System.out.println("File not found, or invalid file format");
-            //e.printStackTrace();
+            // e.printStackTrace();
         }
         gp = new GraphProcessor(graph);
         costOneD = new int[graph.Size()];
@@ -52,8 +52,10 @@ public class MainFunctions {
             case 2:
                 for (int i = 0; i < graph.Size(); i++) {
                     chooseMethodOneSrc(method, i);
-                    costTwoD[i] = costOneD;
-                    parentsTwoD[i] = parentsOneD;
+                    for (int j = 0; j < graph.Size(); j++) {
+                        costTwoD[i][j] = costOneD[j];
+                        parentsTwoD[i][j] = parentsOneD[j];
+                    }
                 }
             case 3:
                 chooseMethodOneSrc(method, 0);
