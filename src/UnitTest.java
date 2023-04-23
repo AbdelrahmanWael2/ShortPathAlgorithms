@@ -3,8 +3,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.sound.midi.VoiceStatus;
-
 import org.junit.Test;
 
 public class UnitTest {
@@ -12,7 +10,70 @@ public class UnitTest {
 
     // start single source
     ////// start dijkstra
-    ///////////////////////////////
+    @Test
+    // direct 1 node path
+    public void dijkstra1() {
+        mf.creatGraph("E:/level2/DS2/ShortPathAlgorithms/positive.txt");
+        mf.chooseMethodOneSrc(1, 1);
+        List<Integer> ans = new ArrayList<>();
+        ans.add(0, 3);
+        ans.add(0, 1);
+        assertEquals(20, mf.getCostFor(1, 3));
+        assertEquals(ans, mf.getPathFor(1, 3));
+
+    }
+
+    @Test
+    // no direct path
+    public void dijkstra2() {
+        mf.creatGraph("E:/level2/DS2/ShortPathAlgorithms/positive.txt");
+        mf.chooseMethodOneSrc(1, 2);
+        List<Integer> ans = new ArrayList<>();
+        ans.add(0, 1);
+        ans.add(0, 0);
+        ans.add(0, 3);
+        ans.add(0, 2);
+        assertEquals(40, mf.getCostFor(2, 1));
+        assertEquals(ans, mf.getPathFor(2, 1));
+    }
+
+    @Test
+    // there is a direct path but not the shortest
+    public void dijkstra3() {
+        mf.creatGraph("E:/level2/DS2/ShortPathAlgorithms/positive.txt");
+        mf.chooseMethodOneSrc(1, 0);
+        List<Integer> ans = new ArrayList<>();
+        ans.add(0, 3);
+        ans.add(0, 1);
+        ans.add(0, 0);
+        assertEquals(30, mf.getCostFor(0, 3));
+        assertEquals(ans, mf.getPathFor(0, 3));
+    }
+
+    @Test
+    // multi quiries
+    public void dijkstra4() {
+        mf.creatGraph("E:/level2/DS2/ShortPathAlgorithms/positive.txt");
+        mf.chooseMethodOneSrc(1, 0);
+        List<Integer> ans = new ArrayList<>();
+        ans.add(0, 3);
+        ans.add(0, 1);
+        ans.add(0, 0);
+        assertEquals(30, mf.getCostFor(0, 3));
+        assertEquals(ans, mf.getPathFor(0, 3));
+        ans.clear();
+
+        ans.add(0, 2);
+        ans.add(0, 0);
+        assertEquals(15, mf.getCostFor(0, 2));
+        assertEquals(ans, mf.getPathFor(0, 2));
+        ans.clear();
+
+        ans.add(0, 1);
+        ans.add(0, 0);
+        assertEquals(10, mf.getCostFor(0, 1));
+        assertEquals(ans, mf.getPathFor(0, 1));
+    }
     ////// end dijkstra
 
     ////// start bellman
@@ -192,7 +253,51 @@ public class UnitTest {
 
     // start all pairs
     ////// start dijkstra
-    ////////////////////////
+    @Test
+    public void allDijkstra1() {
+        mf.creatGraph("E:/level2/DS2/ShortPathAlgorithms/positive.txt");
+        mf.chooseMethodForAll(1);
+        List<Integer> ans = new ArrayList<>();
+        ans.add(0, 3);
+        ans.add(0, 1);
+        assertEquals(20, mf.getCostFor(1, 3));
+        assertEquals(ans, mf.getPathFor(1, 3));
+        ans.clear();
+
+        ans.add(0, 1);
+        ans.add(0, 0);
+        ans.add(0, 3);
+        ans.add(0, 2);
+        assertEquals(40, mf.getCostFor(2, 1));
+        assertEquals(ans, mf.getPathFor(2, 1));
+        ans.clear();
+
+        ans.add(0, 3);
+        ans.add(0, 1);
+        ans.add(0, 0);
+        assertEquals(30, mf.getCostFor(0, 3));
+        assertEquals(ans, mf.getPathFor(0, 3));
+        ans.clear();
+
+        ans.add(0, 3);
+        ans.add(0, 1);
+        ans.add(0, 0);
+        assertEquals(30, mf.getCostFor(0, 3));
+        assertEquals(ans, mf.getPathFor(0, 3));
+        ans.clear();
+
+        ans.add(0, 2);
+        ans.add(0, 0);
+        assertEquals(15, mf.getCostFor(0, 2));
+        assertEquals(ans, mf.getPathFor(0, 2));
+        ans.clear();
+
+        ans.add(0, 1);
+        ans.add(0, 0);
+        assertEquals(10, mf.getCostFor(0, 1));
+        assertEquals(ans, mf.getPathFor(0, 1));
+
+    }
     ////// end dijkstra
 
     ////// start bellman
@@ -257,7 +362,50 @@ public class UnitTest {
     ////// end bellman
 
     ////// start floyed
+    @Test
+    public void allFloyed1() {
+        mf.creatGraph("E:/level2/DS2/ShortPathAlgorithms/negativeW2.txt");
+        mf.chooseMethodOneSrc(3, 0);
+        List<Integer> ans = new ArrayList<>();
+        ans.add(0, 2);
+        ans.add(0, 0);
+        assertEquals(7, mf.getCostFor(0, 2));
+        assertEquals(ans, mf.getPathFor(0, 2));
+        ans.clear();
 
+        ans.add(0, 3);
+        ans.add(0, 6);
+        ans.add(0, 4);
+        ans.add(0, 2);
+        ans.add(0, 0);
+        assertEquals(3, mf.getCostFor(0, 3));
+        assertEquals(ans, mf.getPathFor(0, 3));
+        ans.clear();
+
+        ans.add(0, 3);
+        ans.add(0, 6);
+        ans.add(0, 4);
+        ans.add(0, 2);
+        assertEquals(-4, mf.getCostFor(2, 3));
+        assertEquals(ans, mf.getPathFor(2, 3));
+        ans.clear();
+
+        assertEquals(-6, mf.getCostFor(4, 3));
+        ans.add(0, 3);
+        ans.add(0, 6);
+        ans.add(0, 4);
+        assertEquals(ans, mf.getPathFor(4, 3));
+        ans.clear();
+
+        assertEquals(3, mf.getCostFor(4, 2));
+        ans.add(0, 2);
+        ans.add(0, 0);
+        ans.add(0, 4);
+        assertEquals(ans, mf.getPathFor(4, 2));
+        mf.creatGraph("E:/level2/DS2/ShortPathAlgorithms/negativeW2.txt");
+        mf.chooseMethodOneSrc(2, 1);
+        assertEquals(false, mf.negativeCycle());
+    }
     ////// end floyed
     // end all pairs
 }
