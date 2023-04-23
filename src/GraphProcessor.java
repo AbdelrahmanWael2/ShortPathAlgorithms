@@ -75,6 +75,7 @@ public class GraphProcessor {
 
     public boolean floyedWarsell(int[][] costs, int[][] parents) {
         int n = graph.getV();
+        boolean NoCycle = true;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 costs[i][j] = Integer.MAX_VALUE;
@@ -102,10 +103,29 @@ public class GraphProcessor {
             }
         }
         for (int i = 0; i < n; i++) {
-            if (costs[i][i] < 0)
-                return false;
+            if (costs[i][i] < 0) {
+                // List<Integer> cycle = new ArrayList<>();
+                NoCycle = false;
+                // int cur = parents[i][i];
+                // while (cur != i) {
+                // cycle.add(cur);
+                // cur = parents[i][cur];
+                // }
+                // cycle.add(i);
+                // for (int x : cycle) {
+                // bellmanFord(x, costs[x], parents[x]);
+                // }
+                break;
+            }
         }
-        return true;
+
+        if (!NoCycle) {
+            for (int i = 0; i < n; i++) {
+                bellmanFord(i, costs[i], parents[i]);
+            }
+        }
+
+        return NoCycle;
     }
 
 }

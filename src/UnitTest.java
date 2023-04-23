@@ -166,7 +166,15 @@ public class UnitTest {
         mf.chooseMethodOneSrc(2, 1);
         assertEquals(true, mf.negativeCycle());
     }
-    ////////////////////////////////////// need negative cycle
+
+    @Test
+    // have negative cycle
+    public void bellman7() {
+        mf.creatGraph("E:/level2/DS2/ShortPathAlgorithms/negCycle.txt");
+        mf.chooseMethodOneSrc(2, 0);
+        assertEquals(-44, mf.getCostFor(0, 0));
+        assertEquals(-41, mf.getCostFor(0, 2));
+    }
     ////// end bellman
 
     ////// start floyed
@@ -247,6 +255,14 @@ public class UnitTest {
         assertEquals(true, mf.negativeCycle());
     }
 
+    @Test
+    // have negative cycle
+    public void floyed7() {
+        mf.creatGraph("E:/level2/DS2/ShortPathAlgorithms/negCycle.txt");
+        mf.chooseMethodOneSrc(3, 0);
+        assertEquals(-41, mf.getCostFor(0, 2));
+        assertEquals(-44, mf.getCostFor(0, 0));
+    }
     ////// end floyed
 
     // end single source
@@ -279,13 +295,6 @@ public class UnitTest {
         assertEquals(ans, mf.getPathFor(0, 3));
         ans.clear();
 
-        ans.add(0, 3);
-        ans.add(0, 1);
-        ans.add(0, 0);
-        assertEquals(30, mf.getCostFor(0, 3));
-        assertEquals(ans, mf.getPathFor(0, 3));
-        ans.clear();
-
         ans.add(0, 2);
         ans.add(0, 0);
         assertEquals(15, mf.getCostFor(0, 2));
@@ -303,6 +312,7 @@ public class UnitTest {
     ////// start bellman
 
     @Test
+    // multi sources no negative cycle
     public void allBellman1() {
         mf.creatGraph("E:/level2/DS2/ShortPathAlgorithms/negativeW.txt");
         mf.chooseMethodForAll(2);
@@ -359,6 +369,17 @@ public class UnitTest {
         assertEquals(false, mf.negativeCycle());
     }
 
+    @Test
+    // multi sources with negative cycle
+    public void allBellman2() {
+        mf.creatGraph("E:/level2/DS2/ShortPathAlgorithms/negCycle.txt");
+        mf.chooseMethodForAll(2);
+        assertEquals(-41, mf.getCostFor(0, 2));
+        assertEquals(-30, mf.getCostFor(1, 0));
+        assertEquals(-29, mf.getCostFor(2, 4));
+        assertEquals(-24, mf.getCostFor(3, 1));
+        assertEquals(-16, mf.getCostFor(4, 3));
+    }
     ////// end bellman
 
     ////// start floyed
@@ -402,9 +423,30 @@ public class UnitTest {
         ans.add(0, 0);
         ans.add(0, 4);
         assertEquals(ans, mf.getPathFor(4, 2));
-        mf.creatGraph("E:/level2/DS2/ShortPathAlgorithms/negativeW2.txt");
-        mf.chooseMethodOneSrc(2, 1);
+
         assertEquals(false, mf.negativeCycle());
+    }
+
+    @Test
+    // multi sources with negative cycle
+    public void allFloyed2() {
+        mf.creatGraph("E:/level2/DS2/ShortPathAlgorithms/negCycle.txt");
+        mf.chooseMethodForAll(3);
+        assertEquals(-44, mf.getCostFor(0, 0));
+        assertEquals(-37, mf.getCostFor(0, 1));
+        assertEquals(-41, mf.getCostFor(0, 2));
+        assertEquals(-46, mf.getCostFor(0, 3));
+        assertEquals(-37, mf.getCostFor(0, 4));
+
+        assertEquals(-30, mf.getCostFor(1, 0));
+        assertEquals(-23, mf.getCostFor(1, 1));
+        assertEquals(-27, mf.getCostFor(1, 2));
+        assertEquals(-32, mf.getCostFor(1, 3));
+        assertEquals(-23, mf.getCostFor(1, 4));
+
+        assertEquals(-29, mf.getCostFor(2, 4));
+        assertEquals(-24, mf.getCostFor(3, 1));
+        assertEquals(-16, mf.getCostFor(4, 3));
     }
     ////// end floyed
     // end all pairs

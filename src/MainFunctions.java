@@ -57,6 +57,7 @@ public class MainFunctions {
                         parentsTwoD[i][j] = parentsOneD[j];
                     }
                 }
+                break;
             case 3:
                 chooseMethodOneSrc(method, 0);
                 break;
