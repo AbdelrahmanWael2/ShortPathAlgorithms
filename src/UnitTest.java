@@ -450,4 +450,44 @@ public class UnitTest {
     }
     ////// end floyed
     // end all pairs
+
+    // 3000 nodes 6000 edges
+    @Test
+    public void largeNumM1and3() {
+        MainFunctions mf1 = new MainFunctions();
+        MainFunctions mf3 = new MainFunctions();
+        mf1.creatGraph("E:/level2/DS2/ShortPathAlgorithms/largSize.txt");
+        mf3.creatGraph("E:/level2/DS2/ShortPathAlgorithms/largSize.txt");
+        mf1.chooseMethodForAll(1);
+        mf3.chooseMethodForAll(3);
+        int ans = mf1.getCostFor(2903, 1131);
+        assertEquals(ans, mf3.getCostFor(2903, 1131));
+    }
+
+    @Test
+    public void largeNumM2and3() {
+        MainFunctions mf2 = new MainFunctions();
+        MainFunctions mf3 = new MainFunctions();
+        mf2.creatGraph("E:/level2/DS2/ShortPathAlgorithms/largSize.txt");
+        mf3.creatGraph("E:/level2/DS2/ShortPathAlgorithms/largSize.txt");
+        mf2.chooseMethodForAll(2);
+        mf3.chooseMethodForAll(3);
+        int ans = mf2.getCostFor(2903, 1131);
+        assertEquals(ans, mf3.getCostFor(2903, 1131));
+        assertEquals(mf2.negativeCycle(), mf3.negativeCycle());
+    }
+
+    // larg graph negative
+    @Test
+    public void largeNumNeg() {
+        MainFunctions mf2 = new MainFunctions();
+        MainFunctions mf3 = new MainFunctions();
+        mf2.creatGraph("E:/level2/DS2/ShortPathAlgorithms/largeNeg.txt");
+        mf3.creatGraph("E:/level2/DS2/ShortPathAlgorithms/largeNeg.txt");
+        mf2.chooseMethodForAll(2);
+        mf3.chooseMethodForAll(3);
+        int ans = mf2.getCostFor(1169, 1996);
+        assertEquals(ans, mf3.getCostFor(1169, 1996));
+        assertEquals(mf2.negativeCycle(), mf3.negativeCycle());
+    }
 }
