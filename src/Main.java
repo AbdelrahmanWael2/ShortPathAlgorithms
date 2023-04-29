@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Scanner;
 
 import static java.lang.System.exit;
@@ -195,7 +196,12 @@ public class Main {
                                         dest = Integer.parseInt(String.copyValueOf(destStr));
                                     }
                                     try {
-                                        System.out.println("Minimum Cost from " + source + " to " + dest + ": " + init.getCostFor(source, dest));
+                                        int res = init.getCostFor(source, dest);
+                                        if(res == Integer.MAX_VALUE){
+                                            System.out.println("No path exists between the two specified nodes.");
+                                        } else {
+                                            System.out.println("Minimum Cost from " + source + " to " + dest + ": " + init.getCostFor(source, dest));
+                                        }
                                     } catch (Exception e) {
                                         dest = -1;
                                         clearScreen();
@@ -213,7 +219,12 @@ public class Main {
                                         dest = Integer.parseInt(String.copyValueOf(destStr));
                                     }
                                     try {
-                                        System.out.println("Shortest Path from " + source + " to " + dest + ": " + init.getPathFor(source, dest));
+                                        List<Integer> res = init.getPathFor(source, dest);
+                                        if(res.isEmpty()){
+                                            System.out.println("No path exists between the two specified nodes.");   
+                                         } else {
+                                            System.out.println("Shortest Path from " + source + " to " + dest + ": " + init.getPathFor(source, dest));
+                                         }
                                     } catch (Exception e) {
                                         dest = -1;
                                         clearScreen();
@@ -275,7 +286,12 @@ public class Main {
                                     }
                                 }
                                 try {
-                                    System.out.println("Minimum Cost from " + source + " to " + dest + ": " + init.getCostFor(source, dest));
+                                    int res = init.getCostFor(source, dest);
+                                        if(res == Integer.MAX_VALUE){
+                                            System.out.println("No path exists between the two specified nodes.");
+                                        } else {
+                                            System.out.println("Minimum Cost from " + source + " to " + dest + ": " + init.getCostFor(source, dest));
+                                        }
                                 } catch (Exception e) {
                                     System.out.println("An error has occured, please try again.");
                                 }
@@ -301,7 +317,12 @@ public class Main {
                                     }
                                 }
                                 try {
-                                    System.out.println("Shortest Path from " + source + " to " + dest + ": " + init.getPathFor(source, dest));
+                                    List<Integer> res = init.getPathFor(source, dest);
+                                    if(res.isEmpty()){
+                                        System.out.println("No path exists between the two specified nodes.");   
+                                    } else {
+                                        System.out.println("Shortest Path from " + source + " to " + dest + ": " + init.getPathFor(source, dest));
+                                    }
                                 } catch (Exception e) {
                                     System.out.println("An error has occured, please try again.");
                                 }
