@@ -1,32 +1,34 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.io.File;
 
 public class Graph {
     private int V; // number of vertices
-    private List<List<Edge>> adj;
+    private List<Edge> edges;
 
     public Graph(int V) {
         this.V = V;
-        adj = new ArrayList<>();
-        // make a list for each node
-        for (int i = 0; i < V; i++) {
-            adj.add(new ArrayList<>());
-        }
+        edges = new ArrayList<>();
     }
 
     public void addEdge(int u, int v, int weight) {
-        adj.get(u).add(new Edge(u, v, weight));
+        edges.add(new Edge(u, v, weight));
     }
 
-    public List<Edge> getEdges(int u) {
-        return adj.get(u);
+    public List<Edge> getEdges() {
+        return edges;
     }
 
     public List<Edge> getAdj(int u) {
-        return this.adj.get(u);
+        List<Edge> adjEdges = new ArrayList<>();
+        for (Edge e : edges) {
+            if (e.getU() == u) {
+                adjEdges.add(e);
+            }
+        }
+        return adjEdges;
     }
 
     public int getV() {
@@ -38,7 +40,7 @@ public class Graph {
     }
 
     // return the graph that is read from file
-    public static Graph Initialize(File file) throws FileNotFoundException {
+    public static Graph initialize(File file) throws FileNotFoundException {
         Scanner sc = new Scanner(file);
         int V = sc.nextInt();
         int E = sc.nextInt();

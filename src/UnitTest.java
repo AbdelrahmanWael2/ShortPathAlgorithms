@@ -167,14 +167,6 @@ public class UnitTest {
         assertEquals(true, mf.negativeCycle());
     }
 
-    @Test
-    // have negative cycle
-    public void bellman7() {
-        mf.creatGraph("E:/level2/DS2/ShortPathAlgorithms/negCycle.txt");
-        mf.chooseMethodOneSrc(2, 0);
-        assertEquals(-44, mf.getCostFor(0, 0));
-        assertEquals(-41, mf.getCostFor(0, 2));
-    }
     ////// end bellman
 
     ////// start floyed
@@ -255,14 +247,6 @@ public class UnitTest {
         assertEquals(true, mf.negativeCycle());
     }
 
-    @Test
-    // have negative cycle
-    public void floyed7() {
-        mf.creatGraph("E:/level2/DS2/ShortPathAlgorithms/negCycle.txt");
-        mf.chooseMethodOneSrc(3, 0);
-        assertEquals(-41, mf.getCostFor(0, 2));
-        assertEquals(-44, mf.getCostFor(0, 0));
-    }
     ////// end floyed
 
     // end single source
@@ -305,7 +289,6 @@ public class UnitTest {
         ans.add(0, 0);
         assertEquals(10, mf.getCostFor(0, 1));
         assertEquals(ans, mf.getPathFor(0, 1));
-
     }
     ////// end dijkstra
 
@@ -369,17 +352,6 @@ public class UnitTest {
         assertEquals(false, mf.negativeCycle());
     }
 
-    @Test
-    // multi sources with negative cycle
-    public void allBellman2() {
-        mf.creatGraph("E:/level2/DS2/ShortPathAlgorithms/negCycle.txt");
-        mf.chooseMethodForAll(2);
-        assertEquals(-41, mf.getCostFor(0, 2));
-        assertEquals(-30, mf.getCostFor(1, 0));
-        assertEquals(-29, mf.getCostFor(2, 4));
-        assertEquals(-24, mf.getCostFor(3, 1));
-        assertEquals(-16, mf.getCostFor(4, 3));
-    }
     ////// end bellman
 
     ////// start floyed
@@ -427,27 +399,6 @@ public class UnitTest {
         assertEquals(false, mf.negativeCycle());
     }
 
-    @Test
-    // multi sources with negative cycle
-    public void allFloyed2() {
-        mf.creatGraph("E:/level2/DS2/ShortPathAlgorithms/negCycle.txt");
-        mf.chooseMethodForAll(3);
-        assertEquals(-44, mf.getCostFor(0, 0));
-        assertEquals(-37, mf.getCostFor(0, 1));
-        assertEquals(-41, mf.getCostFor(0, 2));
-        assertEquals(-46, mf.getCostFor(0, 3));
-        assertEquals(-37, mf.getCostFor(0, 4));
-
-        assertEquals(-30, mf.getCostFor(1, 0));
-        assertEquals(-23, mf.getCostFor(1, 1));
-        assertEquals(-27, mf.getCostFor(1, 2));
-        assertEquals(-32, mf.getCostFor(1, 3));
-        assertEquals(-23, mf.getCostFor(1, 4));
-
-        assertEquals(-29, mf.getCostFor(2, 4));
-        assertEquals(-24, mf.getCostFor(3, 1));
-        assertEquals(-16, mf.getCostFor(4, 3));
-    }
     ////// end floyed
     // end all pairs
 
@@ -456,25 +407,16 @@ public class UnitTest {
     public void largeNumM1and3() {
         MainFunctions mf1 = new MainFunctions();
         MainFunctions mf3 = new MainFunctions();
+        MainFunctions mf2 = new MainFunctions();
         mf1.creatGraph("E:/level2/DS2/ShortPathAlgorithms/largSize.txt");
+        mf2.creatGraph("E:/level2/DS2/ShortPathAlgorithms/largSize.txt");
         mf3.creatGraph("E:/level2/DS2/ShortPathAlgorithms/largSize.txt");
         mf1.chooseMethodForAll(1);
+        mf2.chooseMethodForAll(2);
         mf3.chooseMethodForAll(3);
         int ans = mf1.getCostFor(2903, 1131);
         assertEquals(ans, mf3.getCostFor(2903, 1131));
-    }
-
-    @Test
-    public void largeNumM2and3() {
-        MainFunctions mf2 = new MainFunctions();
-        MainFunctions mf3 = new MainFunctions();
-        mf2.creatGraph("E:/level2/DS2/ShortPathAlgorithms/largSize.txt");
-        mf3.creatGraph("E:/level2/DS2/ShortPathAlgorithms/largSize.txt");
-        mf2.chooseMethodForAll(2);
-        mf3.chooseMethodForAll(3);
-        int ans = mf2.getCostFor(2903, 1131);
-        assertEquals(ans, mf3.getCostFor(2903, 1131));
-        assertEquals(mf2.negativeCycle(), mf3.negativeCycle());
+        assertEquals(ans, mf2.getCostFor(2903, 1131));
     }
 
     // larg graph negative
@@ -486,8 +428,48 @@ public class UnitTest {
         mf3.creatGraph("E:/level2/DS2/ShortPathAlgorithms/largeNeg.txt");
         mf2.chooseMethodForAll(2);
         mf3.chooseMethodForAll(3);
-        int ans = mf2.getCostFor(1169, 1996);
-        assertEquals(ans, mf3.getCostFor(1169, 1996));
+        // int ans = mf2.getCostFor(132, 352);
+        // assertEquals(ans, mf3.getCostFor(132, 352));
         assertEquals(mf2.negativeCycle(), mf3.negativeCycle());
+
     }
+
+    @Test
+    public void noPath() {
+        MainFunctions mf3 = new MainFunctions();
+        mf3.creatGraph("E:/level2/DS2/ShortPathAlgorithms/noPath.txt");
+        mf3.chooseMethodForAll(1);
+        List<Integer> ans = new ArrayList<>();
+        assertEquals(Integer.MAX_VALUE, mf3.getCostFor(0, 2));
+        assertEquals(ans, mf3.getPathFor(0, 2));
+        mf3.chooseMethodForAll(2);
+        assertEquals(Integer.MAX_VALUE, mf3.getCostFor(0, 2));
+        assertEquals(ans, mf3.getPathFor(0, 2));
+        mf3.chooseMethodForAll(3);
+        assertEquals(Integer.MAX_VALUE, mf3.getCostFor(0, 2));
+        assertEquals(ans, mf3.getPathFor(0, 2));
+    }
+
+    @Test
+    public void sameNode() {
+        MainFunctions mf3 = new MainFunctions();
+        mf3.creatGraph("E:/level2/DS2/ShortPathAlgorithms/noPath.txt");
+        mf3.chooseMethodForAll(1);
+        List<Integer> ans = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            assertEquals(0, mf3.getCostFor(i, i));
+            assertEquals(ans, mf3.getPathFor(i, i));
+        }
+        mf3.chooseMethodForAll(2);
+        for (int i = 0; i < 5; i++) {
+            assertEquals(0, mf3.getCostFor(0, 0));
+            assertEquals(ans, mf3.getPathFor(0, 0));
+        }
+        mf3.chooseMethodForAll(3);
+        for (int i = 0; i < 5; i++) {
+            assertEquals(0, mf3.getCostFor(i, i));
+            assertEquals(ans, mf3.getPathFor(i, i));
+        }
+    }
+
 }

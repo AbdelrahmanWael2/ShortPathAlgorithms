@@ -17,7 +17,7 @@ public class MainFunctions {
     public void creatGraph(String path) {
         File file = new File(path);
         try {
-            graph = Graph.Initialize(file);
+            graph = Graph.initialize(file);
         } catch (FileNotFoundException e) {
             System.out.println("File not found, or invalid file format");
             // e.printStackTrace();
@@ -30,6 +30,7 @@ public class MainFunctions {
     }
 
     public void chooseMethodOneSrc(int method, int source) {
+        long begin = System.currentTimeMillis();
         this.method = method;
         switch (method) {
             case 1:
@@ -42,29 +43,49 @@ public class MainFunctions {
                 cycle = gp.floyedWarsell(costTwoD, parentsTwoD);
                 break;
         }
+        long end = System.currentTimeMillis();
+        long time = end - begin;
+        System.out.println("Time for one source: " + time);
+
     }
 
     public void chooseMethodForAll(int method) {
+        long begin = System.currentTimeMillis();
         this.method = method;
         forAll = true;
         switch (method) {
             case 1:
+                for (int i = 0; i < graph.Size(); i++) {
+                    chooseMethodOneSrc(method, i);
+                    for (int j = 0; j < graph.Size(); j++) { /// here
+                        costTwoD[i][j] = costOneD[j];
+                        parentsTwoD[i][j] = parentsOneD[j];
+                    }
+                }
+                break;
             case 2:
                 for (int i = 0; i < graph.Size(); i++) {
                     chooseMethodOneSrc(method, i);
-                    for (int j = 0; j < graph.Size(); j++) {
+                    if (!cycle)
+                        return;
+                    for (int j = 0; j < graph.Size(); j++) { /// here
                         costTwoD[i][j] = costOneD[j];
                         parentsTwoD[i][j] = parentsOneD[j];
                     }
                 }
                 break;
             case 3:
+                System.out.println("Working in Floyd .. ");
                 chooseMethodOneSrc(method, 0);
                 break;
         }
+        long end = System.currentTimeMillis();
+        long time = end - begin;
+        System.out.println("Time for one source: " + time);
     }
 
     public int getCostFor(int src, int dest) {
+        // long begin = System.currentTimeMillis();
         switch (method) {
             case 1:
             case 2:
@@ -74,10 +95,12 @@ public class MainFunctions {
             case 3:
                 return costTwoD[src][dest];
         }
+
         return -Integer.MAX_VALUE;
     }
 
     public List<Integer> getPathFor(int src, int dest) {
+        // long begin = System.currentTimeMillis();
         List<Integer> ans = new ArrayList<>();
         switch (method) {
             case 1:
@@ -114,6 +137,9 @@ public class MainFunctions {
                 }
                 break;
         }
+        // long end = System.currentTimeMillis();
+        // long time = end-begin;
+        // System.out.println("Time for getting path: " + time);
         return ans;
     }
 
