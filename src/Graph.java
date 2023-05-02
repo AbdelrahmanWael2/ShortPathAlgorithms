@@ -21,6 +21,7 @@ public class Graph {
         return edges;
     }
 
+
     public List<Edge> getAdj(int u) {
         List<Edge> adjEdges = new ArrayList<>();
         for (Edge e : edges) {
@@ -30,6 +31,7 @@ public class Graph {
         }
         return adjEdges;
     }
+
 
     public int getV() {
         return V;

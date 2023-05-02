@@ -14,20 +14,20 @@ public class Main {
     public static final String ANSI_RESET = "\u001B[0m", BLACK = "\u001B[30m", RED = "\u001B[31m", GREEN = "\u001B[32m",
             YELLOW = "\u001B[33m", BLUE = "\u001B[34m", PURPLE = "\u001B[35m", CYAN = "\u001B[36m";
 
-    public static void prompt() {
+    public static void prompt(){
         System.out.println("Press any key to go back");
-        try {
+        try
+        {
             System.in.read();
-        } catch (Exception e) {
         }
+        catch(Exception e)
+        {}
     }
 
-    public static boolean assertStr(char[] str) {
-        if (str.length == 0)
-            return false;
-        for (int i = 0; i < str.length; ++i) {
-            if (str[i] < '0' || str[i] > '9')
-                return false;
+    public static boolean assertStr(char[] str){
+        if(str.length == 0) return false;
+        for(int i = 0; i < str.length; ++i){
+            if(str[i] < '0' || str[i] > '9') return false;
         }
         return true;
     }
@@ -108,7 +108,7 @@ public class Main {
 
         // Initialize the graph
         boolean initialized = false;
-        while (!initialized) {
+        while(!initialized){
             clearScreen();
             System.out.print(GREEN + "Enter the Graph's Path: " + ANSI_RESET);
             initialized = true;
@@ -122,37 +122,34 @@ public class Main {
             }
         }
 
-        while (true) {
+        while(true){
             // Main menu
             String selection = "0";
-            while (!selection.equals("1") && !selection.equals("2") && !selection.equals("3")
-                    && !selection.equals("4")) {
+            while(!selection.equals("1") && !selection.equals("2") && !selection.equals("3") && !selection.equals("4")){
                 clearScreen();
-                System.out
-                        .println(BLACK + "--> " + PURPLE + "1. " + CYAN + "Single Source Shortest Paths." + ANSI_RESET);
+                System.out.println(BLACK + "--> " + PURPLE + "1. " + CYAN + "Single Source Shortest Paths." + ANSI_RESET);
                 System.out.println(BLACK + "--> " + PURPLE + "2. " + CYAN + "All-Pairs Shortest Paths." + ANSI_RESET);
                 System.out.println(BLACK + "--> " + PURPLE + "3. " + CYAN + "Check for Negative Cycles." + ANSI_RESET);
                 System.out.println(BLACK + "--> " + PURPLE + "4. " + CYAN + "Exit." + ANSI_RESET);
                 selection = sc.nextLine();
             }
-            if (selection.equals("4"))
-                break;
+            if(selection.equals("4")) break;
 
             clearScreen();
 
             // Sub-menus
             boolean endSubMenusLoop = false;
-            while (!endSubMenusLoop) {
+            while(!endSubMenusLoop){
                 boolean modifySource = false;
                 clearScreen();
-                if (selection.equals("1")) { // One source
+                if(selection.equals("1")){  // One source
                     // Ask for source
                     int source = -1;
-                    while (source == -1) {
+                    while(source == -1){
                         System.out.print(CYAN + "Enter the source node: " + ANSI_RESET);
                         String str = sc.nextLine();
                         char[] sourceStr = str.toCharArray();
-                        if (assertStr(sourceStr)) {
+                        if(assertStr(sourceStr)){
                             source = Integer.parseInt(String.copyValueOf(sourceStr));
                         }
                         clearScreen();
@@ -160,16 +157,14 @@ public class Main {
 
                     // Ask for method
                     boolean endMethodSelectionLoop = false;
-                    while (!endMethodSelectionLoop) {
-                        System.out.println(RED + "Select Method\t\t\t" + GREEN + "Source: "
-                                + (source != -1 ? String.valueOf(source) : "NAN") + ANSI_RESET);
+                    while(!endMethodSelectionLoop){
+                        System.out.println(RED + "Select Method\t\t\t" + GREEN + "Source: " + (source!=-1?String.valueOf(source):"NAN") + ANSI_RESET);
                         System.out.println(PURPLE + "1." + CYAN + " Dijkestra" + ANSI_RESET);
                         System.out.println(PURPLE + "2." + CYAN + " Bellman-Ford" + ANSI_RESET);
                         System.out.println(PURPLE + "3." + CYAN + " Floyd-Warshall" + ANSI_RESET);
                         selection = sc.nextLine();
                         clearScreen();
-                        if (!selection.equals("1") && !selection.equals("2") && !selection.equals("3"))
-                            continue;
+                        if(!selection.equals("1") && !selection.equals("2") && !selection.equals("3")) continue;
                         else {
                             try {
                                 init.chooseMethodOneSrc(Integer.parseInt(selection), source);
@@ -182,7 +177,7 @@ public class Main {
                         }
                     }
                     boolean endOneSourceQueryLoop = false;
-                    while (!endOneSourceQueryLoop && !modifySource) {
+                    while(!endOneSourceQueryLoop && !modifySource){
                         clearScreen();
                         System.out.println(PURPLE + "1." + CYAN + " Path Cost." + ANSI_RESET);
                         System.out.println(PURPLE + "2." + CYAN + " Path Nodes." + ANSI_RESET);
@@ -190,23 +185,22 @@ public class Main {
                         selection = sc.nextLine();
                         clearScreen();
                         int dest = -1;
-                        switch (selection) {
+                        switch(selection){
                             case "1":
                                 // Ask for destination
-                                while (dest == -1) {
+                                while(dest == -1){
                                     System.out.print(CYAN + "Enter the destination node: " + ANSI_RESET);
                                     String str = sc.nextLine();
                                     char[] destStr = str.toCharArray();
-                                    if (assertStr(destStr)) {
+                                    if(assertStr(destStr)){
                                         dest = Integer.parseInt(String.copyValueOf(destStr));
                                     }
                                     try {
                                         int res = init.getCostFor(source, dest);
-                                        if (res == Integer.MAX_VALUE) {
+                                        if(res == Integer.MAX_VALUE){
                                             System.out.println("No path exists between the two specified nodes.");
                                         } else {
-                                            System.out.println("Minimum Cost from " + source + " to " + dest + ": "
-                                                    + init.getCostFor(source, dest));
+                                            System.out.println("Minimum Cost from " + source + " to " + dest + ": " + init.getCostFor(source, dest));
                                         }
                                     } catch (Exception e) {
                                         dest = -1;
@@ -217,20 +211,19 @@ public class Main {
                                 break;
                             case "2":
                                 // Ask for destination
-                                while (dest == -1) {
+                                while(dest == -1){
                                     System.out.print(CYAN + "Enter the destination node: " + ANSI_RESET);
                                     String str = sc.nextLine();
                                     char[] destStr = str.toCharArray();
-                                    if (assertStr(destStr)) {
+                                    if(assertStr(destStr)){
                                         dest = Integer.parseInt(String.copyValueOf(destStr));
                                     }
                                     try {
                                         List<Integer> res = init.getPathFor(source, dest);
-                                        if (res.isEmpty()) {
+                                        if(res.isEmpty()){
                                             System.out.println("No path exists between the two specified nodes.");
                                         } else {
-                                            System.out.println("Shortest Path from " + source + " to " + dest + ": "
-                                                    + init.getPathFor(source, dest));
+                                            System.out.println("Shortest Path from " + source + " to " + dest + ": " + init.getPathFor(source, dest));
                                         }
                                     } catch (Exception e) {
                                         dest = -1;
@@ -247,25 +240,24 @@ public class Main {
                                 break;
                         }
                     }
-                } else if (selection.equals("2")) { // All-pairs
+                }else if(selection.equals("2")){  // All-pairs
                     // Ask for Method
                     boolean endMethodSelectionLoop = false;
-                    while (!endMethodSelectionLoop) {
+                    while(!endMethodSelectionLoop){
                         System.out.println(RED + "Select Method\t\t\t" + GREEN + "All-Pairs" + ANSI_RESET);
                         System.out.println(PURPLE + "1." + CYAN + " Dijkestra" + ANSI_RESET);
                         System.out.println(PURPLE + "2." + CYAN + " Bellman-Ford" + ANSI_RESET);
                         System.out.println(PURPLE + "3." + CYAN + " Floyd-Warshall" + ANSI_RESET);
                         selection = sc.nextLine();
                         clearScreen();
-                        if (!selection.equals("1") && !selection.equals("2") && !selection.equals("3"))
-                            continue;
+                        if(!selection.equals("1") && !selection.equals("2") && !selection.equals("3")) continue;
                         else {
                             init.chooseMethodForAll(Integer.parseInt(selection));
                             endMethodSelectionLoop = true;
                         }
                     }
                     boolean endAllPairsQueryLoop = false;
-                    while (!endAllPairsQueryLoop) {
+                    while(!endAllPairsQueryLoop){
                         clearScreen();
                         System.out.println(PURPLE + "1." + CYAN + " Path Cost." + ANSI_RESET);
                         System.out.println(PURPLE + "2." + CYAN + " Path Nodes." + ANSI_RESET);
@@ -273,33 +265,32 @@ public class Main {
                         selection = sc.nextLine();
                         clearScreen();
                         int source = -1, dest = -1;
-                        switch (selection) {
+                        switch(selection){
                             case "1":
                                 // Ask for source
-                                while (source == -1) {
+                                while(source == -1){
                                     System.out.print(CYAN + "Enter the source node: " + ANSI_RESET);
                                     String str = sc.nextLine();
                                     char[] sourceStr = str.toCharArray();
-                                    if (assertStr(sourceStr)) {
+                                    if(assertStr(sourceStr)){
                                         source = Integer.parseInt(String.copyValueOf(sourceStr));
                                     }
                                 }
                                 // Ask for destination
-                                while (dest == -1) {
+                                while(dest == -1){
                                     System.out.print(CYAN + "Enter the destination node: " + ANSI_RESET);
                                     String str = sc.nextLine();
                                     char[] destStr = str.toCharArray();
-                                    if (assertStr(destStr)) {
+                                    if(assertStr(destStr)){
                                         dest = Integer.parseInt(String.copyValueOf(destStr));
                                     }
                                 }
                                 try {
                                     int res = init.getCostFor(source, dest);
-                                    if (res == Integer.MAX_VALUE) {
+                                    if(res == Integer.MAX_VALUE){
                                         System.out.println("No path exists between the two specified nodes.");
                                     } else {
-                                        System.out.println("Minimum Cost from " + source + " to " + dest + ": "
-                                                + init.getCostFor(source, dest));
+                                        System.out.println("Minimum Cost from " + source + " to " + dest + ": " + init.getCostFor(source, dest));
                                     }
                                 } catch (Exception e) {
                                     System.out.println("An error has occured, please try again.");
@@ -308,30 +299,29 @@ public class Main {
                                 break;
                             case "2":
                                 // Ask for source
-                                while (source == -1) {
+                                while(source == -1){
                                     System.out.print(CYAN + "Enter the source node: " + ANSI_RESET);
                                     String str = sc.nextLine();
                                     char[] sourceStr = str.toCharArray();
-                                    if (assertStr(sourceStr)) {
+                                    if(assertStr(sourceStr)){
                                         source = Integer.parseInt(String.copyValueOf(sourceStr));
                                     }
                                 }
                                 // Ask for destination
-                                while (dest == -1) {
+                                while(dest == -1){
                                     System.out.print(CYAN + "Enter the destination node: " + ANSI_RESET);
                                     String str = sc.nextLine();
                                     char[] destStr = str.toCharArray();
-                                    if (assertStr(destStr)) {
+                                    if(assertStr(destStr)){
                                         dest = Integer.parseInt(String.copyValueOf(destStr));
                                     }
                                 }
                                 try {
                                     List<Integer> res = init.getPathFor(source, dest);
-                                    if (res.isEmpty()) {
+                                    if(res.isEmpty()){
                                         System.out.println("No path exists between the two specified nodes.");
                                     } else {
-                                        System.out.println("Shortest Path from " + source + " to " + dest + ": "
-                                                + init.getPathFor(source, dest));
+                                        System.out.println("Shortest Path from " + source + " to " + dest + ": " + init.getPathFor(source, dest));
                                     }
                                 } catch (Exception e) {
                                     System.out.println("An error has occured, please try again.");
@@ -346,26 +336,25 @@ public class Main {
                                 break;
                         }
                     }
-                } else { // Negative Cycles Detector
+                }else{  // Negative Cycles Detector
                     // Ask for Method
                     boolean endMethodSelectionLoop = false;
-                    while (!endMethodSelectionLoop) {
+                    while(!endMethodSelectionLoop){
                         System.out.println(RED + "Select Method" + ANSI_RESET);
                         System.out.println(PURPLE + "1." + CYAN + " Bellman-Ford" + ANSI_RESET);
                         System.out.println(PURPLE + "2." + CYAN + " Floyd-Warshall" + ANSI_RESET);
                         System.out.println(PURPLE + "3." + CYAN + " Back to Main Menu" + ANSI_RESET);
                         selection = sc.nextLine();
                         clearScreen();
-                        if (selection.equals("3")) {
+                        if(selection.equals("3")){
                             endMethodSelectionLoop = true;
                             endSubMenusLoop = true;
                         }
-                        if (!selection.equals("1") && !selection.equals("2"))
-                            continue;
+                        if(!selection.equals("1") && !selection.equals("2")) continue;
                         else {
                             int source = 0;
                             init.chooseMethodOneSrc(Integer.parseInt(selection) + 1, source);
-                            System.out.println("Negative Cycle " + (init.negativeCycle() ? "" : "not ") + "detected.");
+                            System.out.println("Negative Cycle " + (init.negativeCycle()?"":"not ") + "detected.");
                             prompt();
                             endSubMenusLoop = true;
                             endMethodSelectionLoop = true;
